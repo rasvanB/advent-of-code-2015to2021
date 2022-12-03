@@ -2,7 +2,7 @@ const input = Deno.readTextFileSync("input.txt").split("\r\n");
 
 enum actions {
   "on" = 1,
-  "off" = 0,
+  "off" = -1,
   "toggle" = 2,
 }
 
@@ -27,8 +27,8 @@ for (const text of input) {
 
   for (let i = from[0]; i <= to[0]; i++) {
     for (let j = from[1]; j <= to[1]; j++) {
-      litLights[i][j] =
-        action === actions.toggle ? 1 - litLights[i][j] : action;
+      litLights[i][j] +=
+        action === actions.off ? (litLights[i][j] > 0 ? action : 0) : action;
     }
   }
 }
