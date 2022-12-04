@@ -23,17 +23,14 @@ const calculateWire = (input) => {
 
   let operand1, command, operand2;
   if (value.split(" ").length === 3) {
-    [operand1, command, operand2] = value.split(" ");
-    operand1 = tryCast(operand1);
-    operand2 = tryCast(operand2);
+    [operand1, command, operand2] = value.split(" ").map(tryCast);
     wires.set(
       input,
       BITWISE_METHODS[command](calculateWire(operand1), calculateWire(operand2))
     );
   } else if (value.split(" ").length === 2) {
-    [command, operand1] = value.split(" ");
-    operand1 = tryCast(operand1);
-    wires.set(input, BITWISE_METHODS["NOT"](calculateWire(operand1)));
+    [command, operand1] = value.split(" ").map(tryCast);
+    wires.set(input, BITWISE_METHODS[command](calculateWire(operand1)));
   } else {
     wires.set(input, calculateWire(value));
   }
